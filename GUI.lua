@@ -272,8 +272,8 @@ end)
 local Tab = Window:NewTab("Credits")
 
 local Section = Tab:NewSection("Credits")
+Section:NewLabel("Created by Focstor#9922")
 
-Section:NewLabel("Created by Focstor#9922
+Section:NewLabel("Discord: https://discord.gg/zg3FaqBXtd ")
 
-Discord: https://discord.gg/zg3FaqBXtd")
 
