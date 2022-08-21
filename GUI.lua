@@ -25,6 +25,208 @@ Section:NewButton("Anti Cheat Bypass", "water", function()
     game:GetService("Workspace").Map.AntiHack:remove()
 end)
 
+Section:NewButton("Anti Cheat Bypass", "water", function()
+   local lPlayer = game.Players.LocalPlayer;
+local lTeam = lPlayer.TeamColor;
+local mode = 1;
+local speed = .7; -- CFrame interpolation every second.
+local aimToggle = false;
+local enemyColor = BrickColor.Red();
+local friendlyColor = BrickColor.Blue();
+
+function onKeyPress(inputObject, gameProcessedEvent)
+	if inputObject.KeyCode == Enum.KeyCode.RightAlt then
+		if aimToggle == false then
+			--aimToggle = true;
+		else
+			--aimToggle = false;
+		end
+	end
+	if inputObject.KeyCode == Enum.KeyCode.RightControl then
+		if mode == 1 then
+			mode = 0;
+			for i,v in pairs(game.Players:GetChildren()) do
+				if v ~= lPlayer then
+					if game.Workspace:FindFirstChild(v.Name) ~= nil then
+						if v.Character:FindFirstChild("Torso") ~= nil then
+							v.Character.Torso.eP.Frame.Visible = false;
+						end
+						for t,x in pairs(v.Character:GetChildren()) do
+							if x.ClassName == "Part" then
+								if v.Character:FindFirstChild("Head") ~= nil then
+									if v.Character.Head:FindFirstChild("1") ~= nil then
+										for l=1,6 do
+											x:FindFirstChild(l).Frame.Visible = true;
+										end
+									end
+								end
+							end
+						end
+					end
+				end
+			end
+		elseif mode == 0 then
+			mode = 1;
+			for i,v in pairs(game.Players:GetChildren()) do
+				if v ~= lPlayer then
+					if game.Workspace:FindFirstChild(v.Name) ~= nil then
+						if v.Character:FindFirstChild("Torso") ~= nil then
+							v.Character.Torso.eP.Frame.Visible = true;
+						end
+						for t,x in pairs(v.Character:GetChildren()) do
+							if x.ClassName == "Part" then
+								if v.Character:FindFirstChild("Head") ~= nil then
+									if v.Character.Head:FindFirstChild("1") ~= nil then
+										for l=1,6 do
+											x:FindFirstChild(l).Frame.Visible = false;
+										end
+									end
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+end
+ 
+game:GetService("UserInputService").InputBegan:connect(onKeyPress)
+
+local function ClosestPlayer(point)
+	local OnTarget = false;
+	local CurDis = nil;
+	local CurPlayer = nil;
+	for i,v in pairs(game.Players:GetChildren()) do
+		if v ~= lPlayer then
+			if CurDis == nil then
+				CurDis = v:DistanceFromCharacter(lPlayer.Character.Torso.Position);
+				CurPlayer = v;
+			else
+				if v:DistanceFromCharacter(lPlayer.Character.Torso.Position) < CurDis then
+					CurDis = v:DistanceFromCharacter(lPlayer.Character.Torso.Position);
+					CurPlayer = v;
+				end
+			end
+		end
+	end
+	while aimToggle == true do
+		for i = 0, 1, .01 do
+			game.Workspace.CurrentCamera.CFrame = CFrame.new(Vector3.new(game.Workspace.CurrentCamera.CFrame.X,game.Workspace.CurrentCamera.CFrame.Y,game.Workspace.CurrentCamera.CFrame.Z), CurPlayer.Character.Torso.Position);
+		end
+	end
+end
+
+while true do
+	for i,v in pairs(game.Players:GetChildren()) do
+		local vChar = game.Workspace:WaitForChild(v.Name);
+		if vChar.Torso:FindFirstChild("eP") == nil and v ~= lPlayer then
+			local fLayer = Instance.new("BillboardGui");
+			fLayer.Name = "eP";
+			fLayer.Size = UDim2.new(8,0,8,0);
+			fLayer.SizeOffset = Vector2.new(.5,-.55);
+			fLayer.LightInfluence = 0;
+			fLayer.AlwaysOnTop = true;
+			fLayer.Adornee = vChar:WaitForChild("Torso");
+			fLayer.Parent = vChar.Torso;
+			local sLayer = Instance.new("Frame");
+			sLayer.BackgroundTransparency = .5;
+			sLayer.AnchorPoint = Vector2.new(.5,.5);
+			if v.TeamColor == lTeam then
+				sLayer.BackgroundColor = BrickColor.Blue();
+			else
+				sLayer.BackgroundColor = BrickColor.Red();
+			end
+			sLayer.BorderSizePixel = 0;
+			sLayer.Size = UDim2.new(.5,0,.7,0);
+			sLayer.Parent = fLayer;
+			if mode == 0 then
+				sLayer.Visible = false;
+			end
+			local fhLayer = Instance.new("BillboardGui");
+			fhLayer.Name = "ePh";
+			fhLayer.Size = UDim2.new(8,0,8,0);
+			fhLayer.SizeOffset = Vector2.new(.25,-.13);
+			fhLayer.LightInfluence = 0;
+			fhLayer.AlwaysOnTop = true;
+			fhLayer.Adornee = vChar:WaitForChild("Torso");
+			fhLayer.Parent = vChar.Torso;
+			local health = Instance.new("Frame");
+			health.AnchorPoint = Vector2.new(0,.5);
+			health.Name = "health";
+			health.BorderSizePixel = 0;
+			health.BackgroundColor3 = Color3.fromRGB(255,0,0);
+			health.Size = UDim2.new((v.Character.Humanoid.Health/v.Character.Humanoid.MaxHealth)/2,0,.05,0);
+			health.Parent = fhLayer;
+			local fnLayer = Instance.new("BillboardGui");
+			fnLayer.Name = "ePn";
+			fnLayer.Size = UDim2.new(8,0,8,0);
+			fnLayer.SizeOffset = Vector2.new(.25,0);
+			fnLayer.LightInfluence = 0;
+			fnLayer.AlwaysOnTop = true;
+			fnLayer.Adornee = vChar:WaitForChild("Torso");
+			fnLayer.Parent = vChar.Torso;
+			local name = Instance.new("TextLabel");
+			name.AnchorPoint = Vector2.new(0,.5);
+			name.Name = "txtlabel";
+			name.BorderSizePixel = 0;
+			name.BackgroundTransparency = 1;
+			name.Size = UDim2.new(.5,0,.05,0);
+			name.Position = UDim2.new(0,0,0,0);
+			name.TextScaled = true;
+			name.Text = v.Name;
+			name.TextColor3 = Color3.fromRGB(sLayer.BackgroundColor.r,sLayer.BackgroundColor.g,sLayer.BackgroundColor.b);
+			name.Parent = fnLayer;
+			for x,t in pairs(vChar:GetChildren()) do
+				if t.ClassName == "Part" then
+					for l = 1, 6 do
+						local headLayer = Instance.new("SurfaceGui");
+						headLayer.Name = l;
+						headLayer.LightInfluence = 0;
+						headLayer.AlwaysOnTop = true;
+						headLayer.Adornee = vChar:WaitForChild(t.Name);
+						headLayer.Parent = t;
+						if l==1 then
+							headLayer.Face = "Front";
+						elseif l==2 then
+							headLayer.Face = "Right";
+						elseif l==3 then
+							headLayer.Face = "Left";
+						elseif l==4 then
+							headLayer.Face = "Back";
+						elseif l==5 then
+							headLayer.Face = "Top";
+						elseif l==6 then
+							headLayer.Face = "Bottom";
+						end
+						local xLayer = Instance.new("Frame");
+						xLayer.BackgroundTransparency = .5;
+						xLayer.AnchorPoint = Vector2.new(0,0);
+						if v.TeamColor == lTeam then
+							xLayer.BackgroundColor = BrickColor.Blue();
+						else
+							xLayer.BackgroundColor = BrickColor.Red();
+						end
+						xLayer.BorderSizePixel = 0;
+						xLayer.Size = UDim2.new(1,0,1,0);
+						xLayer.Parent = headLayer;
+						if mode == 1 then
+							xLayer.Visible = false;
+						end
+					end
+				end
+			end
+		else
+			if v ~= lPlayer then
+				v.Character.Torso.ePh.health.Size = UDim2.new((v.Character.Humanoid.Health/v.Character.Humanoid.MaxHealth)/2,0,.05,0);
+			end
+		end
+	end
+	wait(.3);
+end
+end)
+
+
 
 
 Section:NewButton("Autofarm V2", "Autofarm", function()
