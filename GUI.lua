@@ -25,14 +25,14 @@ Section:NewButton("Anti Cheat Bypass", "water", function()
     game:GetService("Workspace").Map.AntiHack:remove()
 end)
 
-Section:NewButton("Anti Cheat Bypass", "water", function()
+Section:NewButton("ESP", "esp", function()
    local lPlayer = game.Players.LocalPlayer;
 local lTeam = lPlayer.TeamColor;
 local mode = 1;
 local speed = .7; -- CFrame interpolation every second.
 local aimToggle = false;
-local enemyColor = BrickColor.Red();
-local friendlyColor = BrickColor.Blue();
+local enemyColor = BrickColor.Green();
+local friendlyColor = BrickColor.Yellow();
 
 function onKeyPress(inputObject, gameProcessedEvent)
 	if inputObject.KeyCode == Enum.KeyCode.RightAlt then
