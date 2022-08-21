@@ -269,3 +269,11 @@ Section:NewButton("The central point", "tp", function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-551.928223, 29.833744, -1087.36218, -0.332768977, 4.20666417e-08, -0.943008363, 9.78674848e-08, 1, 1.00734816e-08, 0.943008363, -8.89377176e-08, -0.332768977)
 end)
 
+local Tab = Window:NewTab("Credits")
+
+local Section = Tab:NewSection("Credits")
+
+Section:NewLabel("Created by Focstor#9922
+
+Discord: https://discord.gg/zg3FaqBXtd")
+
