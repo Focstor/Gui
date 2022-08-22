@@ -1,3 +1,11 @@
+local plr = game.Players.LocalPlayer
+
+game.Players.PlayerAdded:Connect(function(hit)
+if hit:IsInGroup(5683059) then
+  plr:Kick("BIG Game Staff Just Joined Ur Game And Automatically Kick You Out!")
+end
+end)
+
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Robojini/Tuturial_UI_Library/main/UI_Template_1"))()
 
 local Window = Library.CreateLib("Wedner Hub", "RJTheme3")
