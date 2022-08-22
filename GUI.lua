@@ -261,11 +261,9 @@ end)
 Section:NewButton("Buy Warhammer (need 650GP)", "free", function()
      game:GetService("ReplicatedStorage").Remotes.EquipWeapon:InvokeServer(unpack(args))
 end)
-end)
 
 Section:NewButton("Buy Armor obsidian (need 750 GP)", "free", function()
      game:GetService("ReplicatedStorage").Remotes.BuyArmor:InvokeServer(unpack(args))
-end)
 end)
 
 
