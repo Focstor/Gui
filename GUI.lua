@@ -6,7 +6,7 @@ if hit:IsInGroup(5683059) then
 end
 end)
 
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Robojini/Tuturial_UI_Library/main/UI_Template_1"))()
+local Library = loadstring(game:HttpGet("nope"))()
 
 local Window = Library.CreateLib("Wedner Hub", "RJTheme3")
 
